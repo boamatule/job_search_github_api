@@ -1,11 +1,14 @@
 import React from 'react';
+import Header from './Header';
+import Search from './Search';
 
 const HomePage = () => {
   return (
-     <div className="container">
-      HomePage
+    <div>
+      <Header />
+      <Search />
     </div>
-  )
- };
+  );
+};
 
- export default HomePage
+export default HomePage
