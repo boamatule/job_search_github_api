@@ -1,9 +1,9 @@
 import axios from 'axios';
 import moment from 'moment';
-import { BASE_API_URL} from '../utils/constants';
+import { BASE_API_URL } from '../utils/constants';
 import { setErrors } from './errors';
 
-export const initialGetJobs = (data) => {
+export const initiateGetJobs = (data) => {
   return async (dispatch) => {
     try {
       let { description, full_time, location, page } = data;
@@ -11,21 +11,21 @@ export const initialGetJobs = (data) => {
       location = location ? encodeURIComponent(location) : '';
       full_time = full_time ? '&full_time=true' : '';
 
-      if(page) {
-        page = parseInt(page)
+      if (page) {
+        page = parseInt(page);
         page = isNaN(page) ? '' : `&page=${page}`;
       }
-    
-    const jobs = await axios.get(
-      `{BASE_API_URL}/jobs?description=${description}&location=${location}${full_time}${page}`
-    );
-    const sortedJobs = jobs.data.sort(
-      (a, b) => 
-      moment(new Date(b.created_at)) - moment(new Date(a.created_at))
-    ); 
-    return dispatch(setJobs(sortedJobs));
+
+      const jobs = await axios.get(
+        `${BASE_API_URL}/jobs?description=${description}&location=${location}${full_time}${page}`
+      );
+      const sortedJobs = jobs.data.sort(
+        (a, b) =>
+          moment(new Date(b.created_at)) - moment(new Date(a.created_at))
+      );
+      return dispatch(setJobs(sortedJobs));
     } catch (error) {
-      error.response && dispatch(setErrors(error.response.data))
+      error.response && dispatch(setErrors(error.response.data));
     }
   };
 };

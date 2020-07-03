@@ -3,7 +3,6 @@ import moment from 'moment';
 
 const JobItem = (props) => {
   const {
-    id,
     type,
     created_at,
     company,
